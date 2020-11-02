@@ -1,50 +1,45 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 class HooksExample extends Component {
 
   //state
   state = {
-    hello : 'world',
-    counter : 0,
-    name : ''
+    smarties : 0,
+    baconIpsum: 'Loading...'
   }
 
   // lifecycle
   componentDidMount() {
-    console.log('mounted!')
-    document.title = this.state.hello
+    axios.get('https://baconipsum.com/api/', {
+      params: {
+        sentences: 1,
+        type: 'meat',
+        format: 'text'
+      }
+    })
+      .then(res => {
+        this.setState({
+          baconIpsum: res.data
+        });
+      });
   }
 
-  componentDidUpdate() {
-    console.log('updated!')
-    document.title = this.state.hello
-
-  }
-
-  //event handlers
-  handleChange = (event) => {
-    this.setState({name : event.target.value})
-  }
 
   increment = () => {
-    this.setState({counter: this.state.counter + 1})
-  }
-
-  changeHello = () => {
-    this.setState({hello : this.state.name })
+    this.setState({
+      smarties: this.state.smarties + 1
+    });
   }
 
   //render
   render() { 
     return (
       <>
-        <p>Hello {this.state.hello}</p>
-        <p>React Counter:{this.state.counter}</p>
-        <input onChange={this.handleChange} placeholder="name" />
+        <p>I ate {this.state.smarties} smarties</p>
+        <button onClick={this.increment}>Eat a smartie!</button> 
 
-        <button onClick={this.changeHello}>Change greeting!</button> 
-        <button onClick={this.increment}>Plus 1!</button> 
-
+        <p>{this.state.baconIpsum}</p>
       </>
     )
   }
