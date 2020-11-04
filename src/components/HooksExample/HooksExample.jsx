@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class HooksExample extends Component {
 
-  //state
+  // state
   state = {
     smarties : 0,
     baconIpsum: 'Loading...'
